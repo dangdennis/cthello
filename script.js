@@ -5,10 +5,6 @@ var gameSize = 8;
 var currentPlayer = 1;
 var totalPlayers = 2;
 
-
-
-
-
 //**************************//
 // ****    DOC READY   **** //
 //**************************//
@@ -24,9 +20,9 @@ $(document).ready(function(){
 
 function eventHandlers() {
 	$(".square").on("click",function() {
-		flipWhite();
-		// flipBlack();
-		// togglePlayer();
+		flipWhite(this);
+		flipBlack(this);
+		togglePlayer();
 	});
 }
 
@@ -36,15 +32,19 @@ function eventHandlers() {
 
 function createBoard() {
 	for(var i = 0; i < gameSize; i++){
-		var rowID = String.fromCharCode(65+i);
-		var row = $("<div>").addClass("row").attr("id",rowID);
+		// var rowID = String.fromCharCode(65+i);
+		var row = $("<div>").addClass("row").attr("row",i);
 		$(".main").append(row);
 		for(var j = 0; j < gameSize; j++) {
-			var idNum = "" + rowID + j;
-			var square = $("<div>").addClass("square").attr("id",idNum).appendTo(row);
+			var square = $("<div>").addClass("square").attr("column",j).appendTo(row);
 		};
 	};
+	//call CreateMiddleMarkers();
 }
+
+// function createMiddleMarkers()
+
+// Toggle Players //
 
 function togglePlayer() {
 	if (currentPlayer === totalPlayers) {
@@ -56,13 +56,17 @@ function togglePlayer() {
 	return currentPlayer;
 }
 
-function flipWhite() {
-	$(this).toggleClass("whitePiece");
+// Flip coins //
+
+function flipWhite(square) {
+	if (currentPlayer === 1) {
+		$(square).toggleClass("whitePiece");
+	}
 }
 
-function flipBlack() {
-	if (currentPlayer = "black") {
-		$(this).toggleClass("blackPiece");
+function flipBlack(square) {
+	if (currentPlayer === 2) {
+		$(square).toggleClass("blackPiece");
 	}
 }
 
