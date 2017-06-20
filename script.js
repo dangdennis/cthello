@@ -2,7 +2,8 @@
 // ****GLOBAL VARIABLES **** //
 //**************************//
 var gameSize = 8;
-var currentPlayer = "white";
+var currentPlayer = 1;
+var totalPlayers = 2;
 
 
 
@@ -45,13 +46,15 @@ function createBoard() {
 	};
 }
 
-// function togglePlayer() {
-// 	if (currentPlayer === "black") {
-// 		currentPlayer = "white";
-// 	} else if (currentPlayer === "white") {
-// 		currentPlayer = "black";
-// 	}
-// }
+function togglePlayer() {
+	if (currentPlayer === totalPlayers) {
+		currentPlayer = 1;
+	}
+	else {
+		currentPlayer++;
+	}
+	return currentPlayer;
+}
 
 function flipWhite() {
 	$(this).toggleClass("whitePiece");
