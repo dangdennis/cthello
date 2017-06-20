@@ -1,4 +1,12 @@
+//**************************//
+// ****GLOBAL VARIABLES **** //
+//**************************//
 var gameSize = 8;
+var currentPlayer = "white";
+
+
+
+
 
 //**************************//
 // ****    DOC READY   **** //
@@ -14,15 +22,11 @@ $(document).ready(function(){
 //**************************//
 
 function eventHandlers() {
-	$(".square").on("click",flipWhite);
-}
-
-function flipWhite() {
-	$(this).toggleClass("whitePiece");
-}
-
-function blackWhite() {
-	$(this).toggleClass("blackPiece");
+	$(".square").on("click",function() {
+		flipWhite();
+		// flipBlack();
+		// togglePlayer();
+	});
 }
 
 //**************************//
@@ -41,6 +45,23 @@ function createBoard() {
 	};
 }
 
+// function togglePlayer() {
+// 	if (currentPlayer === "black") {
+// 		currentPlayer = "white";
+// 	} else if (currentPlayer === "white") {
+// 		currentPlayer = "black";
+// 	}
+// }
+
+function flipWhite() {
+	$(this).toggleClass("whitePiece");
+}
+
+function flipBlack() {
+	if (currentPlayer = "black") {
+		$(this).toggleClass("blackPiece");
+	}
+}
 
 
 // function generateCards(){

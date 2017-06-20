@@ -1,9 +1,12 @@
+body {
+	background: url("pictures/cthulu_background.jpg") no-repeat center;
+	background-size: cover;
+}
+
 .container {
 	width: 100vw;
 	height: 100vh;
 	margin: 0 auto;
-	background: url("pictures/cthulu_background.jpg") no-repeat center;
-	background-size: cover;
 	font-family: 'Bree Serif', serif;
 }
 
