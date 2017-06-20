@@ -4,6 +4,8 @@
 var gameSize = 8;
 var currentPlayer = 1;
 var totalPlayers = 2;
+var currentTokenOnBoard = ["D3","D4","E3","E4"];
+var legalMoves = ["D2","C3"];
 
 //**************************//
 // ****    DOC READY   **** //
@@ -32,11 +34,12 @@ function eventHandlers() {
 
 function createBoard() {
 	for(var i = 0; i < gameSize; i++){
-		// var rowID = String.fromCharCode(65+i);
-		var row = $("<div>").addClass("row").attr("row",i);
-		$(".main").append(row);
+		var rowID = String.fromCharCode(65+i);
+		var row = $("<div>").addClass("row").attr("row",rowID);
+		$(".gameboard").append(row);
 		for(var j = 0; j < gameSize; j++) {
-			var square = $("<div>").addClass("square").attr("column",j).appendTo(row);
+			var position = "" + rowID + j;
+			var square = $("<div>").addClass("square").attr("position",position).appendTo(row);
 		};
 	};
 	//call CreateMiddleMarkers();
