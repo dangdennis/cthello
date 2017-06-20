@@ -39,7 +39,7 @@ function eventHandlers() {
 		flipWhite(this);
 		flipBlack(this);
 		togglePlayer();
-		displayBoard()
+		displayBoard();
 	});
 }
 
@@ -47,8 +47,11 @@ function eventHandlers() {
 // **** GAME FUNCTIONS **** //
 //**************************//
 
+
+/////////////////////////////////////////
+// Creates the board AND inital tokens //
+/////////////////////////////////////////
 function createBoard() {
-	// Create boardgame itself
 	for(var i = 1; i < gameSize+1; i++){
 		// var rowID = String.fromCharCode(65+i);
 		var row = $("<div>").addClass("row").attr("row",i);
@@ -57,20 +60,16 @@ function createBoard() {
 			var square = $("<div>").addClass("square").attr("row",i).attr("col",j).appendTo(row);
 		};
 	};
-	$(".row:nth-child(1)").addClass("topRow");
 	displayBoard();
 }
 
-
-
-
-/////////////////////////////
-// Updates view of the game//
-/////////////////////////////
+//////////////////////////////
+// Updates view of the game //
+//////////////////////////////
 function displayBoard() {
 	for (var i = 1; i < currentBoard.length; i++){
 		for (var j = 1; j < currentBoard[i].length; j++) {
-			var currentPiece = "div[row="+ i + "][col=" + j + "]";
+			var currentPiece = "div[row=" + i + "][col=" + j + "]";
 			if(currentBoard[i][j] === 'w') {
 				$(currentPiece).addClass("whitePiece");
 			} else if (currentBoard[i][j] === 'b') {
@@ -81,6 +80,7 @@ function displayBoard() {
 		}
 	}
 }
+
 ////////////////////
 // Toggle Players //
 ////////////////////
@@ -99,7 +99,6 @@ function togglePlayer() {
 //////////////////////////////////
 function flipWhite(square) {
 	if (currentPlayer === 1) {
-		$(square).toggleClass("whitePiece");
 		var i = $(square).attr("row");
 		var j = $(square).attr("col");
 		currentBoard[i][j] = 'w';
@@ -107,7 +106,6 @@ function flipWhite(square) {
 }
 function flipBlack(square) {
 	if (currentPlayer === 2) {
-		$(square).toggleClass("blackPiece");
 		var i = $(square).attr("row");
 		var j = $(square).attr("col");
 		currentBoard[i][j] = 'b';
