@@ -1,6 +1,13 @@
+@font-face {
+	font-family: lovecraft-cursive-hplhs;
+	src: url("lovecraft-cursive-hplhs-1361506076.ttf");
+}
+
 body {
 	background: url("pictures/cthulu_background.jpg") no-repeat center;
 	background-size: cover;
+	text-align: center;
+	height: 108vh;
 }
 
 .container {
@@ -8,28 +15,90 @@ body {
 	height: 100vh;
 	margin: 0 auto;
 	font-family: 'Bree Serif', serif;
+	/*border: 1px solid black;*/
 }
 
 .main {
+	width: 60%;
+	height: 75%;
+	margin: 6% auto;
+	background-color: rgba(0, 0, 0, 0.8);
+	background-image: url("pictures/hp.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 70%;
+	/*border: 1px solid red;*/
+}
+
+header {
+	/*border: 1px solid yellow;*/
+	height: 10%;
 	width: 80%;
-	height: 80%;
-	margin: 8% auto;
+	margin: 0 auto;
+	/*background: url(pictures/header_background.jpg);*/
+}
+
+ul {
+	list-style: none;
+	font-family: lovecraft-cursive-hplhs, sans-serif;
+	margin-top: 0px;
+	padding: 0;
+	justify-content: space-around;
 	/*border: 1px solid black;*/
+}
+
+h1 {
+	height: 65%;
+	font-family: "Eccentric Std", sans-serif;
+	font-size: 62px;
+	color: white;
+	/*border: 1px solid black;*/
+	margin-top: 0px;
+}
+
+li {
+	box-sizing: border-box;
+	display: inline-block;
+	/*padding: 20px;*/
+	color: white;
+	margin-right: 30px;
+	font-size: 24px;
+	background-color: darkslateblue;
+	height: 30px;
+	/*border: 1px solid black;*/
+}
+
+a {
+	color: #FFC16E;
+}
+
+.playeraOneIcon {
+	float: left;
+	width: 15%;
+	margin-left: -120px;
+
+}
+
+.playerTwoIcon {
+	float: right;
+	width: 15%;
+	margin-right: -90px;
 }
 
 .row {
 	width: 100%;
-  height: 12.5%;
-  margin: auto;
+	height: 12.5%;
+	margin: auto;
 	box-sizing: border-box;
+	/*border: 1px solid red;*/
 }
 
 .square {
 	box-sizing: border-box;
 	width: 12.5%;
 	height: 100%;
-	background-color: transparent;
-	border: 1px solid black;
+	/*background-color: rgba(0, 0, 0, 0.8);*/
+	border: 1px solid  #FFC16E;
 	display: inline-block;
 }
 
