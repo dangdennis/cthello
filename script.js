@@ -4,8 +4,9 @@
 
 var gameSize = 8;
 var currentPlayer = "w";
-	// MODEL ::: 0 = empty, w = white,player1, b = black,player2
 var boardModel = createBoard();
+var blackScore = null;
+var whiteScore = null;
 var legalMoves = [];
 // Win condition: when no more 0s in boardModel nor valid moves available
 
@@ -128,7 +129,9 @@ function placeCoin(coin, currentPlayer) {
 // **** Determining Legal Tiles **** //
 //***********************************//
 
-// 1: Get array of occupied tiles
+//=====================================//
+// Step 1: Get array of occupied tiles //
+//=====================================//
 function getOccupiedSquares(){
 	var occupiedSquaresArr = [];
 	for(var i = 0; i < boardModel.length; i++) {
@@ -141,7 +144,31 @@ function getOccupiedSquares(){
 	return occupiedSquaresArr;
 }
 
-// 2: Use AdjacentTiles(coin) which returns up to 8 tiles (in the beginning);
+//=================================================================//
+// Step 2: Use array of occupied tiles to get adjacent open tiles; //
+//=================================================================//
+function getOpenAdjacentSquares(arr) {
+	var openAdjacentSquares = [];
+	for(var i = 0; i < arr.length; i++) {
+		var adjacentSquares = getAdjacentSquares(arr[i]);
+		for(var j = 0; j < adjacentSquares.length; j++) {
+			if (adjacentSquares[j].color === "none") {
+				openAdjacentSquares.push(adjacentSquares[j]);
+			}
+		}
+	}
+	uniqueArray(openAdjacentSquares);
+	return openAdjacentSquares;
+}
+
+//===============================================//
+// Step 2A: Clears an array of any repeats based on index //
+//===============================================//
+function uniqueArray(arr) {
+	return arr.filter(function(el,position,arr){
+		return arr.indexOf(el) == position;
+	})
+}
 
 
 
@@ -149,7 +176,7 @@ function getOccupiedSquares(){
 // Gets available squares for player //
 //   Credit: Matt Denney (3===D~)    //
 //===================================//
-function getAdjacentTiles(coin){
+function getAdjacentSquares(coin){
 	var arr = [];
 	var coords = coin.coords;
 	for (var i = -1; i < 2; i++) {
@@ -158,9 +185,13 @@ function getAdjacentTiles(coin){
 			if(i==0 && j==0) {
 				continue;
 			};
-			// If coin with coords exist
+			// Checks for edges, prevents errors from trying to push
+			// squares beyond the array space
+			// Basically if row exists here:
 			if(boardModel[coords[0]+i]) {
+				// If tile exists within that row:
 				if(boardModel[coords[0]+i][coords[1]+j]){
+					// Pushes array of unique empty tiles
 					arr.push(boardModel[coords[0]+i][coords[1]+j]);
 				}
 			}
