@@ -25,8 +25,8 @@ body {
 	background-color: rgba(0, 0, 0, 0.8);
 	background-image: url("pictures/hp.png");
 	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	background-size: 70%;
+	background-position: 50% 20%;
+	background-size: 66%;
 	/*border: 1px solid red;*/
 }
 
@@ -72,6 +72,27 @@ a {
 	color: #FFC16E;
 }
 
+.lovecraft {
+	/*border: 1px solid black;*/
+	font-family: lovecraft-cursive-hplhs, sans-serif;
+	font-size: 36px;
+	float: left;
+	width: 15%;
+	margin-left: -180px;
+	margin-top: 185px;
+}
+
+.poe {
+	/* border: 1px solid red; */
+	font-family: lovecraft-cursive-hplhs, sans-serif;
+	font-size: 36px;
+	color: red;
+	float: right;
+	width: 15%;
+	margin-right: -188px;
+	margin-top: 175px;
+}
+
 .playeraOneIcon {
 	float: left;
 	width: 15%;
@@ -83,6 +104,28 @@ a {
 	float: right;
 	width: 15%;
 	margin-right: -90px;
+}
+
+.playerOneScore {
+	float: left;
+	height: 100%;
+	width: 10%;
+	border: 4px solid white;
+	margin-top: 220px;
+	margin-left: -155px;
+}
+
+.playerTwoScore {
+	float: right;
+	height: 100%;
+	width: 10%;
+	border: 4px solid white;
+	margin-top: 215px;
+	margin-right: -160px;
+}
+p {
+	color: white;
+	font-family: "Droid Sans Mono Dotted"
 }
 
 .row {
