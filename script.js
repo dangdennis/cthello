@@ -210,48 +210,45 @@ function getAdjacentSquares(coin){
 
 // Display Scores
 
+
+
+
+
+
+var remainingSpaces = 64;
+var legalMoves = true;
 var gameEnd = false;
-var countWhite = 0;
-var countBlack = 0;
-function winCheck(){
-    for (var i = 0; i < boardModel.length; i++) {
-        for (var j = 0; j < boardModel[i].length; j++) {
-            if (boardModel[i][j] === "w") {
-                countBlack++;
-            }
-            else if (boardModel[i][j] === "b") {
-                countWhite++;
-            }
-        }
+
+function winCheck() {
+    if (remainingSpaces === 0 || !legalMoves) {
+        gameEnd = true;
         if (countBlack > countWhite) {
-            gameEnd = true;
             console.log("Black Wins!");
         }
-        else if (countWhite === countBlack) {
-            gameEnd = true;
-            console.log("Tie Game!");
-        }
-        else {
-            gameEnd = true;
+        else if (countBlack < countWhite) {
             console.log("White Wins!");
         }
-        gameEnd = false;
+        else {
+            console.log("Tie Game!");
+        }
     }
-    // gameEnd = true;
-    // if countBlack > countWhite
-        // Black wins
-    // if countWhite < countBlack
-        // White wins
-
-    // When there's no more valid moves left
-        // Count
-    // When no more squares left
-    // game end = false. change to true
-
 }
 
-function winFinale(){
-    var winMessage =
+var countWhite = 0;
+var countBlack = 0;
+
+function scoreTracker() {
+    for (var i = 0; i < boardModel.length; i++) {
+        for (var j = 0; i < boardModel[i].length; j++) {
+            if (boardModel[i][j] === "w") {
+                countWhite++;
+                remainingSpaces--;
+            }
+            else if (boardModel[i][j] === "b") {
+                countBlack++;
+                remainingSpaces--;
+            }
+        }
+    }
 }
 
-// function count scores
