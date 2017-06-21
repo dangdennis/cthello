@@ -6,7 +6,7 @@ var gameSize = 8;
 var currentPlayer = "w";
 	// MODEL ::: 0 = empty, w = white,player1, b = black,player2
 var boardModel = createBoard();
-var legalMoves = null;
+var legalMoves = [];
 // Win condition: when no more 0s in boardModel nor valid moves available
 
 //**************************//
@@ -31,20 +31,33 @@ function eventHandlers() {
 	});
 }
 
+//=================================//
+// Completes end of turn sequences //
+//=================================//
+function endOfTurn() {
+	// clearAllVs();
+	displayBoard();
+	togglePlayer();
+}
+
 //**************************//
 // **** GAME FUNCTIONS **** //
 //**************************//
 
 //=====================================//
-// Create board and sets inital tokens //
+// Create board and sets initial tokens //
 //=====================================//
 function createBoard() {
-	var boardModel = []
+	// Two things happening: model and view of board
+	// are both created at the same time. Sorry
+	var boardModel = [];
 	for(var i = 0; i < gameSize; i++){
+		// Model + view ROWS
 		var rowModel = [];
 		var rowView = $("<div>").addClass("row").attr("row",i);
 		$(".main").append(rowView);
 		for(var j = 0; j < gameSize; j++) {
+			// Model + view SQUARES/COINS
 			var coin = new Coin(i,j);
 			rowModel.push(coin);
 			var square = $("<div>").addClass("square").attr("row",i)
@@ -60,7 +73,7 @@ function createBoard() {
 }
 
 //==============//
-// Create tiles //
+// Creates coin //
 //==============//
 function Coin(x,y){
 	this.coords = [x,y];
@@ -87,14 +100,6 @@ function displayBoard() {
 	}
 }
 
-//=================================//
-// Completes end of turn sequences //
-//=================================//
-function endOfTurn() {
-	// clearAllVs();
-	displayBoard();
-	togglePlayer();
-}
 
 //=================================//
 // Flips enemy coins when captured //
@@ -123,13 +128,25 @@ function placeCoin(coin, currentPlayer) {
 // **** Determining Legal Tiles **** //
 //***********************************//
 
-function getOpenAdjacentTiles(){
-	
+// 1: Get array of occupied tiles
+function getOccupiedSquares(){
+	var occupiedSquaresArr = [];
+	for(var i = 0; i < boardModel.length; i++) {
+		for (var j = 0; j < boardModel[i].length; j++) {
+			if (boardModel[i][j].color === "w" || boardModel[i][j].color === "b" ) {
+				occupiedSquaresArr.push(boardModel[i][j]);
+			}
+		}
+	}
+	return occupiedSquaresArr;
 }
+
+// 2: Use AdjacentTiles(coin) which returns up to 8 tiles (in the beginning);
+
 
 
 //===================================//
-// Gets available squares for player
+// Gets available squares for player //
 //   Credit: Matt Denney (3===D~)    //
 //===================================//
 function getAdjacentTiles(coin){
@@ -151,3 +168,59 @@ function getAdjacentTiles(coin){
 	}
 	return arr;
 }
+
+// Win Condition
+// function win_check(row_number, col_number, character){
+//     if(horizontal_check(row_number) || vertical_check(col_number) || left_diagonal_check(row_number,col_number) || right_diagonal_check(row_number,col_number)){
+//         setTimeout(function(){hide_div("#game_page","#win_page")},500);
+//         win_ending(character);
+//     }
+//}
+
+// Display Scores
+
+var gameEnd = false;
+var countWhite = 0;
+var countBlack = 0;
+function winCheck(){
+    for (var i = 0; i < boardModel.length; i++) {
+        for (var j = 0; j < boardModel[i].length; j++) {
+            if (boardModel[i][j] === "w") {
+                countBlack++;
+            }
+            else if (boardModel[i][j] === "b") {
+                countWhite++;
+            }
+        }
+        if (countBlack > countWhite) {
+            gameEnd = true;
+            console.log("Black Wins!");
+        }
+        else if (countWhite === countBlack) {
+            gameEnd = true;
+            console.log("Tie Game!");
+        }
+        else {
+            gameEnd = true;
+            console.log("White Wins!");
+        }
+        gameEnd = false;
+    }
+    // gameEnd = true;
+    // if countBlack > countWhite
+        // Black wins
+    // if countWhite < countBlack
+        // White wins
+
+    // When there's no more valid moves left
+        // Count
+    // When no more squares left
+    // game end = false. change to true
+
+}
+
+function winFinale(){
+    var winMessage =
+}
+
+// function count scores
