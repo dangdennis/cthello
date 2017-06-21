@@ -17,32 +17,6 @@ body {
 	/*border: 1px solid black;*/
 }
 
-/*.topRow {
-	width: 100%;
-	height: 10%;
-	margin: auto;
-	box-sizing: border-box;
-	background-color: black;
-	display: inline-block;
-}
-
-.leftRow {
-	width: 11.1%;
-	height: 90%;
-	margin: auto;
-	box-sizing: border-box;
-	background-color: blue;
-	display: inline-block;
-}*/
-
-/*.gameboard {
-	width: 80%;
-	height: 80%;
-	margin: 8% auto;
-	display:inline-block;
-	background-color: lightblue;
-}*/
-
 .row {
 	width: 100%;
   height: 12.5%;
@@ -65,4 +39,9 @@ body {
 
 .whitePiece {
 	background: url("pictures/white_360.png") no-repeat center;
+}
+
+.validMoves {
+	background-color: red;
+	opacity: 0.5;
 }

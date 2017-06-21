@@ -3,8 +3,7 @@
 //**************************//
 
 var gameSize = 8;
-var currentPlayer = 1;
-var totalPlayers = 2;
+var currentPlayer = "w";
 	// MODEL ::: 0 = empty, w = white,player1, b = black,player2
 var currentBoard = [
 	[0,0,0,0,0,0,0,0,0], // Top Row
@@ -17,9 +16,8 @@ var currentBoard = [
 	[0,0,0,0,0,0,0,0,0], // G
 	[0,0,0,0,0,0,0,0,0], // H
 ];
-var legalMoves = ["D2","C3"];
 
-
+// Win condition: when no more 0s in currentBoard nor valid moves available
 
 //**************************//
 // ****   DOC READY    **** //
@@ -36,10 +34,9 @@ $(document).ready(function(){
 
 function eventHandlers() {
 	$(".square").on("click",function() {
-		flipWhite(this);
-		flipBlack(this);
-		togglePlayer();
-		displayBoard();
+		placeCoin(this,currentPlayer);
+		// flipLines();
+		endOfTurn();
 	});
 }
 
@@ -47,10 +44,9 @@ function eventHandlers() {
 // **** GAME FUNCTIONS **** //
 //**************************//
 
-
-/////////////////////////////////////////
+//=====================================//
 // Creates the board AND inital tokens //
-/////////////////////////////////////////
+//=====================================//
 function createBoard() {
 	for(var i = 1; i < gameSize+1; i++){
 		// var rowID = String.fromCharCode(65+i);
@@ -63,17 +59,76 @@ function createBoard() {
 	displayBoard();
 }
 
-//////////////////////////////
-// Updates view of the game //
-//////////////////////////////
+//=====================================//
+// Updates player with available moves //
+//=====================================//
+
+function getPossiblePlacements(){
+	clearAllVs();
+	checkRight();
+	checkLeft();
+	checkUp();
+	checkDown();
+	checkDiag1();
+	checkDiag2();
+}
+
+function checkRight() {
+	// given currentPlayer,
+	debugger;
+	if (currentPlayer === 1) { // white coins only
+		// check for all currentPlayer coin placements
+		for (var i = 1; i < currentBoard.length; i++){
+			for (var j = 1; j < currentBoard[i].length; j++){
+				if (currentBoard[i][j] === "w"){
+					// checkRight();
+					// at the current placements, check for any adjacent enemy coins
+					// to the right
+					// var indexOfYourFirstCoin = currentBoard[i].indexOf(currentBoard[i][j]);
+					// console.log("lastindexOf:",indexOfYourFirstCoin);
+					for (var k = 1; k < currentBoard[i].length-i; k++) {
+						// if there are enemy coins, continue that direction until
+						// empty space
+						if (currentBoard[i][j+k] === "b"){
+							continue;
+						} else if (currentBoard[i][j+k] === 0) {
+							console.log('we found a valid empty spot', currentBoard[i][j+k]);
+							currentBoard[i][j+k] = "v";
+						} else {
+							break;
+						}
+					}
+				}
+			}
+							// push location of empty space into legalMoves array
+							// remove all click listeners and add only to spaces
+							// within legalMoves array
+		}
+	}
+}
+// Perhaps split up loops into 4 direction with a function each
+
+//=================================//
+// Flips enemy coins when captured //
+//=================================//
+function flipLines(){
+
+}
+
+
+//=======================//
+// Updates view of board //
+//=======================//
 function displayBoard() {
 	for (var i = 1; i < currentBoard.length; i++){
 		for (var j = 1; j < currentBoard[i].length; j++) {
 			var currentPiece = "div[row=" + i + "][col=" + j + "]";
-			if(currentBoard[i][j] === 'w') {
+			if(currentBoard[i][j] === 'w') {         // "w" = white pieces
 				$(currentPiece).addClass("whitePiece");
-			} else if (currentBoard[i][j] === 'b') {
+			} else if (currentBoard[i][j] === 'b') { // "b" = black pieces
 				$(currentPiece).addClass("blackPiece");
+			} else if (currentBoard[i][j] === 'v') { // "v" = valid moves
+				$(currentPiece).addClass("validMove");
 			} else {
 				continue;
 			}
@@ -81,33 +136,27 @@ function displayBoard() {
 	}
 }
 
-////////////////////
-// Toggle Players //
-////////////////////
-function togglePlayer() {
-	if (currentPlayer === totalPlayers) {
-		currentPlayer = 1;
-	}
-	else {
-		currentPlayer++;
-	}
-	return currentPlayer;
+//=================================//
+// Completes end of turn sequences //
+//=================================//
+function endOfTurn() {
+	// clearAllVs();
+	displayBoard();
+	togglePlayer();
 }
 
-//////////////////////////////////
-// Flip coins on view and model //
-//////////////////////////////////
-function flipWhite(square) {
-	if (currentPlayer === 1) {
-		var i = $(square).attr("row");
-		var j = $(square).attr("col");
-		currentBoard[i][j] = 'w';
-	}
+//================//
+// Toggle Players //
+//================//
+function togglePlayer() {
+	return currentPlayer = currentPlayer === "w" ? "b" : "w";
 }
-function flipBlack(square) {
-	if (currentPlayer === 2) {
-		var i = $(square).attr("row");
-		var j = $(square).attr("col");
-		currentBoard[i][j] = 'b';
-	}
+
+//==============================//
+// Flip coins on view and model //
+//==============================//
+function placeCoin(square, currentPlayer) {
+	var i = $(square).attr("row");
+	var j = $(square).attr("col");
+	currentBoard[i][j] = currentPlayer;
 }
