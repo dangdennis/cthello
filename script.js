@@ -35,6 +35,7 @@ function eventHandlers() {
 //=================================//
 function endOfTurn() {
 	// clearAllVs();
+
 	displayBoard();
 	togglePlayer();
 }
@@ -59,8 +60,9 @@ function createBoard() {
 			// Model + view SQUARES/COINS
 			var coin = new Coin(i,j);
 			rowModel.push(coin);
-			var square = $("<div>").addClass("square").attr("row",i)
-			.attr("col",j).appendTo(rowView);
+			var square = $("<div>").addClass("square").attr("row",i).attr("col",j).appendTo(rowView);
+			square[0].coinObject = coin;
+			square.text("x:"+i+",y: "+j);
 		};
 		boardModel.push(rowModel);
 	};
@@ -130,24 +132,26 @@ function togglePlayer() {
 //=====================//
 // Flip coins on model //
 //=====================//
-function placeCoin(coin, currentPlayer) {
-	var i = $(coin).attr("row");
-	var j = $(coin).attr("col");
-	boardModel[i][j].color = currentPlayer;
+function placeCoin(coinElement, currentPlayer) {
+	var i = $(coinElement).attr("row");
+	var j = $(coinElement).attr("col");
+	coinElement.innerHTML +="HERE";
+	getAdjacentSquares(coinElement.coinObject);
+	//checkLegalSquares(i,j);
+	//boardModel[i][j].color = currentPlayer;
 }
 
 //***********************************//
 // **** Determining Legal Tiles **** //
 //***********************************//
 
-function checkLegalSquares() {
+function checkLegalSquares(x,y) {
 	test1 = getOccupiedSquares();
 	test2 = getOpenAdjacentSquares(test1);
 	test3 = getSquaresNextToEnemy(test2,currentPlayer);
 	console.log(test3);
 	test4 = getLegalSquares(test3);
 }
-
 
 //=====================================//
 // Step 1: Get array of occupied tiles //
@@ -217,24 +221,7 @@ function getSquaresNextToEnemy(arr,currentPlayer) {
 	return nextToEnemySquares;
 }
 
-//==================================================//
-// Step 4: Determine actual legal moves down a line //
-//==================================================//
-function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray){
-	var enemyColor = currentPlayer === "w" ? "b" : "w";
-	var next = [];
-	next[0] = coords[0] + xDif;
-	next[1] = coords[1] + yDif;
-	if(boardModel[next.y]!==undefined){
-		if(boardModel[coords[1]][coords[0]] === oppositeColor){
-			targetArray.push(coords);
-			getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray);
-		}
-		return;
-	}
-	return;
 
-}
 
 function getLegalSquares(arr) {
 	var legalSquares = [];
@@ -262,7 +249,7 @@ function getLegalSquares(arr) {
 
 //===================================//
 // Gets available squares for player //
-//       Credit: Matt Denney         //
+//      Dan's handiwork              //
 //===================================//
 function getAdjacentSquares(coin){
 	var arr = [];
@@ -272,25 +259,49 @@ function getAdjacentSquares(coin){
 		{xDif:1, yDif:0},    //right
 		{xDif:0, yDif:-1},   //up
 		{xDif:0, yDif:1},    //down
-		{xDif:-1, yDif:1}    //upleft
+		{xDif:-1, yDif:1},    //upleft
+		{xDif:1, yDif:1},   //down right
+		{xDif:-1,yDif:1},   //down left
+		{xDif:1, yDif:-1}   //up right
 	];
-	for (var i = -1; i < 2; i++) {
-		for(var j = -1; j < 2; j++) {
-			// Checks all around the coin except itself
-			if(i==0 && j==0) {
-				continue;
-			};
-			// Checks for edges, prevents errors from trying to push
-			// squares beyond the array space
-			// Basically if row exists here:
-			if(boardModel[coords[0]+i]) {
-				// If tile exists within that row:
-				if(boardModel[coords[0]+i][coords[1]+j]){
-					// Pushes array of unique empty tiles
-					arr.push(boardModel[coords[0]+i][coords[1]+j]);
-				}
-			}
+	for (var vectorIndex = 0; vectorIndex < vectors.length; vectorIndex++) {
+
+		var result = getSquareInDirection(coords, vectors[vectorIndex].xDif, vectors[vectorIndex].yDif, currentPlayer, arr);
+		// if(result){
+		// 	//flipCoins(arr);
+		// 	debugger;
+		// 	arr = [];
+		// }
+	}
+	if(arr.length>0){
+		for(var i = 0; i < arr.length; i++) {
+			// arr[i] = [3x,5y]
+			boardModel[arr[0]][arr[1]].color = currentPlayer;
 		}
 	}
 	return arr;
+}
+//==================================================//
+// Step 4: Determine actual legal moves down a line //
+//==================================================//
+function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray){
+	var enemyColor = currentPlayer === "w" ? "b" : "w";
+	var next = [];
+	next[0] = coords[0] + xDif;
+	next[1] = coords[1] + yDif;
+	if(boardModel[coords[1]]!==undefined){
+		if(boardModel[next[1]][next[0]].color === 'none'){
+			return false;
+		}
+		if(boardModel[next[1]][next[0]].color === enemyColor) {
+			targetArray.push(next);
+			if(boardModel[next[1]][next[0]].color === currentPlayer) {
+
+			}
+			getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray);
+		}
+		return;
+	}
+	return;
+
 }
