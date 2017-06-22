@@ -19,21 +19,6 @@ $(document).ready(function(){
 });
 
 
-//=================================//
-// Welcome Page Modal & Close Page //
-//=================================//
-
-// var modal = document.querySelector('#myModal');
-// var span = document.querySelector('.close')[0];
-//
-// function welcome_page() {
-// 	modal.style.display = "block";
-// }
-//
-// function close() {
-// 	modal.style.display = 'none';
-// }
-
 //**************************//
 // **** EVENT HANDLERS **** //
 //**************************//
@@ -311,6 +296,7 @@ function getAdjacentSquares(coin) {
 	// }
 	return arr;
 }
+
 //==================================================//
 // Step 4: Determine actual legal moves down a line //
 //==================================================//
@@ -344,3 +330,45 @@ function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray, is
 	function gameEnds() {
 
 	}
+
+
+//==========================//
+// GAME END CONDITION CHECK //
+//==========================//
+var remainingSpaces = 64;
+var legalMoves = true;
+var gameEnd = false;
+
+function winCheck() {
+    if (remainingSpaces === 0 || !legalMoves) {
+        gameEnd = true;
+        if (countBlack > countWhite) {
+            console.log("Black Wins!");
+        }
+        else if (countBlack < countWhite) {
+            console.log("White Wins!");
+        }
+        else {
+            console.log("Tie Game!");
+        }
+    }
+}
+
+var countWhite = 0;
+var countBlack = 0;
+
+function getScores() {
+    for (var i = 0; i < boardModel.length; i++) {
+        for (var j = 0; i < boardModel[i].length; j++) {
+            if (boardModel[i][j] === "w") {
+                countWhite++;
+                remainingSpaces--;
+            }
+            else if (boardModel[i][j] === "b") {
+                countBlack++;
+                remainingSpaces--;
+            }
+        }
+    }
+}
+
