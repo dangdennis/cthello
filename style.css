@@ -3,6 +3,11 @@
 	src: url("lovecraft-cursive-hplhs-1361506076.ttf");
 }
 
+@font-face {
+	font-family: Ddigital-7s;
+	src: url("digital-7 (italic).ttf");
+}
+
 body {
 	background: url("pictures/cthulu_background.jpg") no-repeat center;
 	background-size: cover;
@@ -20,7 +25,7 @@ body {
 
 .main {
 	width: 60%;
-	height: 75%;
+	height: 70%;
 	margin: 6% auto;
 	background-color: rgba(0, 0, 0, 0.8);
 	background-image: url("pictures/hp.png");
@@ -56,7 +61,7 @@ h1 {
 	margin-top: 0px;
 }
 
-li {
+header li {
 	box-sizing: border-box;
 	display: inline-block;
 	/*padding: 20px;*/
@@ -66,6 +71,21 @@ li {
 	background-color: darkslateblue;
 	height: 30px;
 	/*border: 1px solid black;*/
+}
+
+footer {
+	/*border: 1px solid yellow;*/
+	margin-top: -50px
+}
+
+footer li {
+	box-sizing: border-box;
+	display: inline-block;
+	color: white;
+	margin-right: 30px;
+	font-size: 24px;
+	background-color: darkslateblue;
+	/*height: 30px;*/
 }
 
 a {
@@ -125,7 +145,9 @@ a {
 }
 p {
 	color: white;
-	font-family: "Droid Sans Mono Dotted"
+	font-family: Ddigital-7s;
+	font-size: 24px;
+	margin: 8px;
 }
 
 .row {
@@ -143,7 +165,11 @@ p {
 	/*background-color: rgba(0, 0, 0, 0.8);*/
 	border: 1px solid  #FFC16E;
 	display: inline-block;
-	color: white;
+	color: limegreen;
+}
+.tempHighlight{
+	border: 3px solid limegreen;
+	box-sizing: border-box;
 }
 
 .blackPiece {
@@ -157,4 +183,47 @@ p {
 .validMoves {
 	background-color: red;
 	opacity: 0.5;
+}
+
+/* The Modal (background)
+.modal {
+    display: none; Hidden by default
+    position: fixed; Stay in place
+    z-index: 1; Sit on top
+    left: 0;
+    top: 0;
+    width: 100%; Full width
+    height: 100%; Full height
+    overflow: auto; Enable scroll if needed
+    background-color: rgb(0,0,0); Fallback color
+    background-color: rgba(0,0,0,0.4); Black w/ opacity
+} */
+
+/* Modal Content/Box */
+.modal-content {
+	position: fixed;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	border: 1px solid red;
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+	border: 1px solid yellow;
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }

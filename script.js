@@ -4,7 +4,7 @@
 
 var gameSize = 8;
 var currentPlayer = "w";
-var boardModel = createBoard();
+var boardModel;
 var legalMoves = [];
 // Win condition: when no more 0s in boardModel nor valid moves available
 
@@ -13,10 +13,26 @@ var legalMoves = [];
 //**************************//
 
 $(document).ready(function(){
-	createBoard();
+	boardModel = createBoard();
 	displayBoard();
 	eventHandlers();
-})
+});
+
+
+//=================================//
+// Welcome Page Modal & Close Page //
+//=================================//
+
+// var modal = document.querySelector('#myModal');
+// var span = document.querySelector('.close')[0];
+//
+// function welcome_page() {
+// 	modal.style.display = "block";
+// }
+//
+// function close() {
+// 	modal.style.display = 'none';
+// }
 
 //**************************//
 // **** EVENT HANDLERS **** //
@@ -25,19 +41,9 @@ $(document).ready(function(){
 function eventHandlers() {
 	$(".square").on("click",function() {
 		placeCoin(this,currentPlayer);
-		// flipLines();
-		endOfTurn();
+		displayBoard();
+		togglePlayer();
 	});
-}
-
-//=================================//
-// Completes end of turn sequences //
-//=================================//
-function endOfTurn() {
-	// clearAllVs();
-
-	displayBoard();
-	togglePlayer();
 }
 
 //**************************//
@@ -55,15 +61,19 @@ function createBoard() {
 		// Model + view ROWS
 		var rowModel = [];
 		var rowView = $("<div>").addClass("row").attr("row",i);
-		$(".main").append(rowView);
+		var rowSquares = [];
 		for(var j = 0; j < gameSize; j++) {
 			// Model + view SQUARES/COINS
 			var coin = new Coin(i,j);
 			rowModel.push(coin);
-			var square = $("<div>").addClass("square").attr("row",i).attr("col",j).appendTo(rowView);
+			var square = $("<div>").addClass("square").attr("row",i).attr("col",j);
 			square[0].coinObject = coin;
+			coin.domElement = square;
 			square.text("x:"+i+",y: "+j);
+			rowSquares.push(square);
 		};
+		rowView.append(rowSquares);
+		$(".main").append(rowView);
 		boardModel.push(rowModel);
 	};
 	boardModel[3][3].color = "w";
@@ -88,6 +98,7 @@ function displayBoard() {
 	for (var i = 0; i < boardModel.length; i++){
 		for (var j = 0; j < boardModel[i].length; j++) {
 			var CurrentCoin = "div[row=" + i + "][col=" + j + "]";
+			$(CurrentCoin).removeClass('whitePiece blackPiece');
 			if(boardModel[i][j].color === 'w') {         // "w" = white pieces
 				$(CurrentCoin).addClass("whitePiece");
 			} else if (boardModel[i][j].color === 'b') { // "b" = black pieces
@@ -105,22 +116,15 @@ function displayBoard() {
 //=================================//
 // Flips enemy coins when captured //
 //=================================//
-// var isSameColor = false;
-// function flipLines(arr) {
-// 	var colorLineArray = [];
-//   for (var i = 0; i < arr.length; i++) {
-//     if (arr[i] === 'b') {
-//       isSameColor = true;
-//       arr[i] = 'b';
-//     }
-//     else if (arr[i] === 'w'){
-//       isSameColor = false;
-//       arr[i] = 'w';
-//     }
-//     newArray.push(arr[i]);
-//   }
-//   return colorLineArray;
-// }
+
+function flipLine(arr) {
+	for (var i = 0; i < arr.length; i++) {
+		markSquare(arr[i][0],arr[i][1]);
+	};
+}
+function markSquare(x,y){
+	boardModel[x][y].color = currentPlayer;
+}
 
 //================//
 // Toggle Players //
@@ -135,10 +139,9 @@ function togglePlayer() {
 function placeCoin(coinElement, currentPlayer) {
 	var i = $(coinElement).attr("row");
 	var j = $(coinElement).attr("col");
-	coinElement.innerHTML +="HERE";
 	getAdjacentSquares(coinElement.coinObject);
 	//checkLegalSquares(i,j);
-	//boardModel[i][j].color = currentPlayer;
+	// boardModel[i][j].color = currentPlayer;
 }
 
 //***********************************//
@@ -234,6 +237,34 @@ function getLegalSquares(arr) {
 	}
 	return legalSquares;
 }
+//
+// //====================================================//
+// // Step 3: Find open squares next to enemy tiles only //
+// //====================================================//
+// function getSquaresNextToEnemy(arr,currentPlayer) {
+//     var enemyColor = currentPlayer === "w" ? "b" : "w";
+//     console.log("enemy color",enemyColor);
+//     var nextToEnemySquares = [];
+//     for (var i = 0; i < arr.length; i++) {
+//         var coords = arr[i].coords;
+//         for (var i = -1; i < 2; i++) {
+//
+//
+//         }
+//     }
+//     return nextToEnemySquares
+// }
+
+// if enemy, keep going in that directoin
+// if my color, addClass 'valid' to initial tile
+// return
+// else if empty spot, stop checking in that direction
+// but still check other
+
+
+//==================================================//
+// Step 4: Determine actual legal moves down a line //
+//==================================================//
 
 // if enemy, keep going in that direction
 // if my color, addClass 'valid' to initial tile
@@ -249,59 +280,67 @@ function getLegalSquares(arr) {
 
 //===================================//
 // Gets available squares for player //
-//      Dan's handiwork              //
 //===================================//
-function getAdjacentSquares(coin){
+
+function getAdjacentSquares(coin) {
 	var arr = [];
 	var coords = coin.coords;
 	var vectors = [
-		{xDif:-1, yDif:0},  //check left
-		{xDif:1, yDif:0},    //right
-		{xDif:0, yDif:-1},   //up
-		{xDif:0, yDif:1},    //down
-		{xDif:-1, yDif:1},    //upleft
-		{xDif:1, yDif:1},   //down right
-		{xDif:-1,yDif:1},   //down left
-		{xDif:1, yDif:-1}   //up right
+		{xDif: -1, yDif: 0},  //check left
+		{xDif: 1, yDif: 0},    //right
+		{xDif: 0, yDif: -1},   //up
+		{xDif: 0, yDif: 1},    //down
+		{xDif: -1, yDif: 1},    //upleft
+		{xDif: 1, yDif: 1},   //down right
+		{xDif: -1, yDif: 1},   //down left
+		{xDif: 1, yDif: -1}   //up right
 	];
 	for (var vectorIndex = 0; vectorIndex < vectors.length; vectorIndex++) {
-
-		var result = getSquareInDirection(coords, vectors[vectorIndex].xDif, vectors[vectorIndex].yDif, currentPlayer, arr);
-		// if(result){
-		// 	//flipCoins(arr);
-		// 	debugger;
-		// 	arr = [];
-		// }
-	}
-	if(arr.length>0){
-		for(var i = 0; i < arr.length; i++) {
-			// arr[i] = [3x,5y]
-			boardModel[arr[0]][arr[1]].color = currentPlayer;
+		var result = getSquareInDirection(coords, vectors[vectorIndex].xDif, vectors[vectorIndex].yDif, currentPlayer, arr, false);
+		if(result){
+			//add coin to current position
+			markSquare(coords[0],coords[1]);
+			flipLine(arr);
 		}
 	}
+	// if (arr.length > 0) {
+	// 	for (var i = 0; i < arr.length; i++) {
+	// 		// arr[i] = [3x,5y]
+	// 		boardModel[arr[i][0]][arr[i][1]].color = currentPlayer;
+	// 	};
+	// }
 	return arr;
 }
 //==================================================//
 // Step 4: Determine actual legal moves down a line //
 //==================================================//
-function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray){
+
+
+function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray, isValid) {
 	var enemyColor = currentPlayer === "w" ? "b" : "w";
 	var next = [];
 	next[0] = coords[0] + xDif;
 	next[1] = coords[1] + yDif;
-	if(boardModel[coords[1]]!==undefined){
-		if(boardModel[next[1]][next[0]].color === 'none'){
-			return false;
-		}
-		if(boardModel[next[1]][next[0]].color === enemyColor) {
-			targetArray.push(next);
-			if(boardModel[next[1]][next[0]].color === currentPlayer) {
-
+	$(".tempHighlight").removeClass("tempHighlight");
+	boardModel[next[0]][next[1]].domElement.addClass('tempHighlight');
+	if (boardModel[coords[0]] !== undefined) {
+			if (boardModel[next[0]][next[1]].color === enemyColor) {
+				isValid = true;
+				targetArray.push(next);
+				return getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray, isValid);
 			}
-			getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray);
-		}
-		return;
-	}
-	return;
+			else if (boardModel[next[0]][next[1]].color === 'none' ||
+				boardModel[next[0]][next[1]].color === undefined) {
+				return false;
+			} else if(boardModel[next[0]][next[1]].color === currentPlayer) {
+				return isValid;
+		    }
 
-}
+		}
+
+
+	}
+
+	function gameEnds() {
+
+	}
