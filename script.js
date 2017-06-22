@@ -18,7 +18,23 @@ $(document).ready(function(){
 	createBoard();
 	displayBoard();
 	eventHandlers();
-})
+});
+
+
+//=================================//
+// Welcome Page Modal & Close Page //
+//=================================//
+
+// var modal = document.querySelector('#myModal');
+// var span = document.querySelector('.close')[0];
+//
+// function welcome_page() {
+// 	modal.style.display = "block";
+// }
+//
+// function close() {
+// 	modal.style.display = 'none';
+// }
 
 //**************************//
 // **** EVENT HANDLERS **** //
@@ -27,7 +43,7 @@ $(document).ready(function(){
 function eventHandlers() {
 	$(".square").on("click",function() {
 		placeCoin(this,currentPlayer);
-		// flipLines();
+		flipLines();
 		endOfTurn();
 	});
 }
@@ -105,9 +121,17 @@ function displayBoard() {
 //=================================//
 // Flips enemy coins when captured //
 //=================================//
-function flipLines(){
-
+function flipLines() {
+    console.log('fliplines function clicked');
+    for (var i = 1; i < 2; i++) {
+        if ([0,1] === 'none' && [1,0] === 'none' && [-1,0] === 'none' && [0,-1] === 'none') {
+            return;
+        } else {
+            console.log('you found one')
+        }
+    }
 }
+
 
 //================//
 // Toggle Players //
@@ -169,6 +193,34 @@ function uniqueArray(arr) {
 		return arr.indexOf(el) == position;
 	})
 }
+//
+// //====================================================//
+// // Step 3: Find open squares next to enemy tiles only //
+// //====================================================//
+// function getSquaresNextToEnemy(arr,currentPlayer) {
+//     var enemyColor = currentPlayer === "w" ? "b" : "w";
+//     console.log("enemy color",enemyColor);
+//     var nextToEnemySquares = [];
+//     for (var i = 0; i < arr.length; i++) {
+//         var coords = arr[i].coords;
+//         for (var i = -1; i < 2; i++) {
+//
+//
+//         }
+//     }
+//     return nextToEnemySquares
+// }
+
+// if enemy, keep going in that directoin
+// if my color, addClass 'valid' to initial tile
+// return
+// else if empty spot, stop checking in that direction
+// but still check other
+
+
+//==================================================//
+// Step 4: Determine actual legal moves down a line //
+//==================================================//
 
 
 
@@ -176,26 +228,27 @@ function uniqueArray(arr) {
 // Gets available squares for player //
 //   Credit: Matt Denney (3===D~)    //
 //===================================//
-function getAdjacentSquares(coin){
-	var arr = [];
-	var coords = coin.coords;
-	for (var i = -1; i < 2; i++) {
-		for(var j = -1; j < 2; j++) {
-			// Checks all around the coin except itself
-			if(i==0 && j==0) {
-				continue;
-			};
-			// Checks for edges, prevents errors from trying to push
-			// squares beyond the array space
-			// Basically if row exists here:
-			if(boardModel[coords[0]+i]) {
-				// If tile exists within that row:
-				if(boardModel[coords[0]+i][coords[1]+j]){
-					// Pushes array of unique empty tiles
-					arr.push(boardModel[coords[0]+i][coords[1]+j]);
-				}
-			}
-		}
-	}
-	return arr;
+function getAdjacentSquares(coin) {
+    var arr = [];
+    var coords = coin.coords;
+    for (var i = -1; i < 2; i++) {
+        for (var j = -1; j < 2; j++) {
+            // Checks all around the coin except itself
+            if (i == 0 && j == 0) {
+                continue;
+            }
+            ;
+            // Checks for edges, prevents errors from trying to push
+            // squares beyond the array space
+            // Basically if row exists here:
+            if (boardModel[coords[0] + i]) {
+                // If tile exists within that row:
+                if (boardModel[coords[0] + i][coords[1] + j]) {
+                    // Pushes array of unique empty tiles
+                    arr.push(boardModel[coords[0] + i][coords[1] + j]);
+                }
+            }
+        }
+    }
+    return arr;
 }
