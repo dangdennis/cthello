@@ -1,0 +1,229 @@
+@font-face {
+	font-family: lovecraft-cursive-hplhs;
+	src: url("lovecraft-cursive-hplhs-1361506076.ttf");
+}
+
+@font-face {
+	font-family: Ddigital-7s;
+	src: url("digital-7 (italic).ttf");
+}
+
+body {
+	background: url("pictures/cthulu_background.jpg") no-repeat center;
+	background-size: cover;
+	text-align: center;
+	height: 108vh;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	margin: 0 auto;
+	font-family: 'Bree Serif', serif;
+	/*border: 1px solid black;*/
+}
+
+.main {
+	width: 60%;
+	height: 70%;
+	margin: 6% auto;
+	background-color: rgba(0, 0, 0, 0.8);
+	background-image: url("pictures/hp.png");
+	background-repeat: no-repeat;
+	background-position: 50% 20%;
+	background-size: 66%;
+	/*border: 1px solid red;*/
+}
+
+header {
+	/*border: 1px solid yellow;*/
+	height: 10%;
+	width: 80%;
+	margin: 0 auto;
+	/*background: url(pictures/header_background.jpg);*/
+}
+
+ul {
+	list-style: none;
+	font-family: lovecraft-cursive-hplhs, sans-serif;
+	margin-top: 0px;
+	padding: 0;
+	justify-content: space-around;
+	/*border: 1px solid black;*/
+}
+
+h1 {
+	height: 65%;
+	font-family: "Eccentric Std", sans-serif;
+	font-size: 62px;
+	color: white;
+	/*border: 1px solid black;*/
+	margin-top: 0px;
+}
+
+header li {
+	box-sizing: border-box;
+	display: inline-block;
+	/*padding: 20px;*/
+	color: white;
+	margin-right: 30px;
+	font-size: 24px;
+	background-color: darkslateblue;
+	height: 30px;
+	/*border: 1px solid black;*/
+}
+
+footer {
+	/*border: 1px solid yellow;*/
+	margin-top: -50px
+}
+
+footer li {
+	box-sizing: border-box;
+	display: inline-block;
+	color: white;
+	margin-right: 30px;
+	font-size: 24px;
+	background-color: darkslateblue;
+	/*height: 30px;*/
+}
+
+a {
+	color: #FFC16E;
+}
+
+.lovecraft {
+	/*border: 1px solid black;*/
+	font-family: lovecraft-cursive-hplhs, sans-serif;
+	font-size: 36px;
+	float: left;
+	width: 15%;
+	margin-left: -180px;
+	margin-top: 185px;
+}
+
+.poe {
+	/* border: 1px solid red; */
+	font-family: lovecraft-cursive-hplhs, sans-serif;
+	font-size: 36px;
+	color: red;
+	float: right;
+	width: 15%;
+	margin-right: -188px;
+	margin-top: 175px;
+}
+
+.playerOneIcon {
+	float: left;
+	width: 15%;
+	margin-left: -120px;
+
+}
+
+.playerTwoIcon {
+	float: right;
+	width: 15%;
+	margin-right: -90px;
+}
+
+.playerOneScore {
+	float: left;
+	height: 100%;
+	width: 10%;
+	border: 4px solid white;
+	margin-top: 220px;
+	margin-left: -155px;
+}
+
+.playerTwoScore {
+	float: right;
+	height: 100%;
+	width: 10%;
+	border: 4px solid white;
+	margin-top: 215px;
+	margin-right: -160px;
+}
+p {
+	color: white;
+	font-family: Ddigital-7s;
+	font-size: 24px;
+	margin: 8px;
+}
+
+.row {
+	width: 100%;
+	height: 12.5%;
+	margin: auto;
+	box-sizing: border-box;
+	/*border: 1px solid red;*/
+}
+
+.square {
+	box-sizing: border-box;
+	width: 12.5%;
+	height: 100%;
+	/*background-color: rgba(0, 0, 0, 0.8);*/
+	border: 1px solid  #FFC16E;
+	display: inline-block;
+	color: limegreen;
+}
+.tempHighlight{
+	border: 3px solid purple;
+	box-sizing: border-box;
+}
+
+.blackPiece {
+	background: url("pictures/black_360.png") no-repeat center;
+}
+
+.whitePiece {
+	background: url("pictures/white_360.png") no-repeat center;
+}
+
+.validMoves {
+	background-color: red;
+	opacity: 0.5;
+}
+
+/* The Modal (background)
+.modal {
+    display: none; Hidden by default
+    position: fixed; Stay in place
+    z-index: 1; Sit on top
+    left: 0;
+    top: 0;
+    width: 100%; Full width
+    height: 100%; Full height
+    overflow: auto; Enable scroll if needed
+    background-color: rgb(0,0,0); Fallback color
+    background-color: rgba(0,0,0,0.4); Black w/ opacity
+} */
+
+/* Modal Content/Box */
+.modal-content {
+	position: fixed;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	border: 1px solid red;
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+	border: 1px solid yellow;
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
