@@ -5,8 +5,6 @@
 var gameSize = 8;
 var currentPlayer = "w";
 var boardModel = createBoard();
-var blackScore = null;
-var whiteScore = null;
 var legalMoves = [];
 // Win condition: when no more 0s in boardModel nor valid moves available
 
@@ -105,9 +103,22 @@ function displayBoard() {
 //=================================//
 // Flips enemy coins when captured //
 //=================================//
-function flipLines(){
-
-}
+// var isSameColor = false;
+// function flipLines(arr) {
+// 	var colorLineArray = [];
+//   for (var i = 0; i < arr.length; i++) {
+//     if (arr[i] === 'b') {
+//       isSameColor = true;
+//       arr[i] = 'b';
+//     }
+//     else if (arr[i] === 'w'){
+//       isSameColor = false;
+//       arr[i] = 'w';
+//     }
+//     newArray.push(arr[i]);
+//   }
+//   return colorLineArray;
+// }
 
 //================//
 // Toggle Players //
@@ -128,6 +139,15 @@ function placeCoin(coin, currentPlayer) {
 //***********************************//
 // **** Determining Legal Tiles **** //
 //***********************************//
+
+function checkLegalSquares() {
+	test1 = getOccupiedSquares();
+	test2 = getOpenAdjacentSquares(test1);
+	test3 = getSquaresNextToEnemy(test2,currentPlayer);
+	console.log(test3);
+	test4 = getLegalSquares(test3);
+}
+
 
 //=====================================//
 // Step 1: Get array of occupied tiles //
@@ -161,24 +181,99 @@ function getOpenAdjacentSquares(arr) {
 	return openAdjacentSquares;
 }
 
-//===============================================//
-// Step 2A: Clears an array of any repeats based on index //
-//===============================================//
+//======================================//
+// Step 2A: Clears the adjacent-squares //
+// array of any repeats based on index  //
+//======================================//
 function uniqueArray(arr) {
-	return arr.filter(function(el,position,arr){
-		return arr.indexOf(el) == position;
-	})
+	for (var i = 0; i < arr.length; i++) {
+		for (var j = i+1; j < arr.length; j++) {
+			if (arr[i].coords[0] === arr[j].coords[0] &&
+				arr[i].coords[1] === arr[j].coords[1]){
+				arr.splice(j,1);
+			}
+		}
+	}
 }
 
+//====================================================//
+// Step 3: Find open squares next to enemy tiles only //
+//====================================================//
+function getSquaresNextToEnemy(arr,currentPlayer) {
+	var enemyColor = currentPlayer === "w" ? "b" : "w";
+	console.log("enemy color",enemyColor);
+	var nextToEnemySquares = [];
+	for (var i = 0; i < arr.length; i++) {
+		var adjacentSquares = getAdjacentSquares(arr[i]);
+		for (var j = 0; j < adjacentSquares.length; j++) {
+			if(adjacentSquares[j].color === enemyColor) {
+				nextToEnemySquares.push(arr[i]);
+			} else {
+				continue;
+			}
+		}
+	}
+	uniqueArray(nextToEnemySquares);
+	return nextToEnemySquares;
+}
 
+//==================================================//
+// Step 4: Determine actual legal moves down a line //
+//==================================================//
+function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray){
+	var enemyColor = currentPlayer === "w" ? "b" : "w";
+	var next = [];
+	next[0] = coords[0] + xDif;
+	next[1] = coords[1] + yDif;
+	if(boardModel[next.y]!==undefined){
+		if(boardModel[coords[1]][coords[0]] === oppositeColor){
+			targetArray.push(coords);
+			getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray);
+		}
+		return;
+	}
+	return;
+
+}
+
+function getLegalSquares(arr) {
+	var legalSquares = [];
+	for (var i = 0; i < arr.length; i++) {
+		var adjacentSquares = getAdjacentSquares(arr[i]);
+		for (var j = 0; j < adjacentSquares.length; j++) {
+			var coordz = adjacentSquares[i].coords;
+			getSquareInDirection(coordz, i, j, currentPlayer, legalSquares)
+		}
+	}
+	return legalSquares;
+}
+
+// if enemy, keep going in that direction
+// if my color, addClass 'valid' to initial tile
+// return
+// else if empty spot, stop checking in that direction
+// but still check other
+
+
+//==============================================//
+// Step 5: Add Event Listeners to Legal Squares //
+//==============================================//
+	// while also removing all other click event listeners
 
 //===================================//
 // Gets available squares for player //
-//   Credit: Matt Denney (3===D~)    //
+//       Credit: Matt Denney         //
 //===================================//
 function getAdjacentSquares(coin){
 	var arr = [];
 	var coords = coin.coords;
+	var vectors = [
+		{xDif:-1, yDif:0},  //check left
+		{xDif:1, yDif:0},    //right
+		{xDif:0, yDif:-1},   //up
+		{xDif:0, yDif:1},    //down
+		{xDif:-1, yDif:1}    //upleft
+	];
 	for (var i = -1; i < 2; i++) {
 		for(var j = -1; j < 2; j++) {
 			// Checks all around the coin except itself
