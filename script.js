@@ -18,7 +18,7 @@ $(document).ready(function(){
 	createBoard();
 	displayBoard();
 	eventHandlers();
-})
+});
 
 //**************************//
 // **** EVENT HANDLERS **** //
@@ -170,8 +170,6 @@ function uniqueArray(arr) {
 	})
 }
 
-
-
 //===================================//
 // Gets available squares for player //
 //   Credit: Matt Denney (3===D~)    //
@@ -200,21 +198,6 @@ function getAdjacentSquares(coin){
 	return arr;
 }
 
-// Win Condition
-// function win_check(row_number, col_number, character){
-//     if(horizontal_check(row_number) || vertical_check(col_number) || left_diagonal_check(row_number,col_number) || right_diagonal_check(row_number,col_number)){
-//         setTimeout(function(){hide_div("#game_page","#win_page")},500);
-//         win_ending(character);
-//     }
-//}
-
-// Display Scores
-
-
-
-
-
-
 var remainingSpaces = 64;
 var legalMoves = true;
 var gameEnd = false;
@@ -237,7 +220,7 @@ function winCheck() {
 var countWhite = 0;
 var countBlack = 0;
 
-function scoreTracker() {
+function getScores() {
     for (var i = 0; i < boardModel.length; i++) {
         for (var j = 0; i < boardModel[i].length; j++) {
             if (boardModel[i][j] === "w") {
