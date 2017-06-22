@@ -5,8 +5,6 @@
 var gameSize = 8;
 var currentPlayer = "w";
 var boardModel;
-var legalMoves = [];
-// Win condition: when no more 0s in boardModel nor valid moves available
 
 //**************************//
 // ****   DOC READY    **** //
@@ -42,6 +40,7 @@ function eventHandlers() {
 	$(".square").on("click",function() {
 		placeCoin(this,currentPlayer);
 		displayBoard();
+		// getScores();
 		togglePlayer();
 	});
 }
@@ -112,6 +111,32 @@ function displayBoard() {
 	}
 }
 
+//=====================//
+// Win Condition Check //
+//    + Score Check    //
+//=====================//
+
+var remainingSpaces = 64;
+var countWhite = 0;
+var countBlack = 0;
+
+function getScores() {
+	for (var i = 0; i < boardModel.length; i++) {
+		for (var j = 0; i < boardModel[i].length; j++) {
+			if (boardModel[i][j] === "w") {
+				countWhite++;
+				remainingSpaces--;
+				$(".playerOneScore").text(countWhite);
+			}
+			else if (boardModel[i][j] === "b") {
+				countBlack++;
+				remainingSpaces--;
+				$(".playerTwoScore").text(countBlack);
+			}
+		}
+	}
+}
+
 
 //=================================//
 // Flips enemy coins when captured //
@@ -144,99 +169,163 @@ function placeCoin(coinElement, currentPlayer) {
 	// boardModel[i][j].color = currentPlayer;
 }
 
-//***********************************//
-// **** Determining Legal Tiles **** //
-//***********************************//
+//=========================================================//
+// From origin, checks available squares in all directions //
+//=========================================================//
 
-function checkLegalSquares(x,y) {
-	test1 = getOccupiedSquares();
-	test2 = getOpenAdjacentSquares(test1);
-	test3 = getSquaresNextToEnemy(test2,currentPlayer);
-	console.log(test3);
-	test4 = getLegalSquares(test3);
-}
-
-//=====================================//
-// Step 1: Get array of occupied tiles //
-//=====================================//
-function getOccupiedSquares(){
-	var occupiedSquaresArr = [];
-	for(var i = 0; i < boardModel.length; i++) {
-		for (var j = 0; j < boardModel[i].length; j++) {
-			if (boardModel[i][j].color === "w" || boardModel[i][j].color === "b" ) {
-				occupiedSquaresArr.push(boardModel[i][j]);
-			}
+function getAdjacentSquares(coin) {
+	var arr = [];
+	var coords = coin.coords;
+	var vectors = [
+		{xDif: 0, yDif: -1},  //left
+		{xDif: 0, yDif: 1},   //right
+		{xDif: -1, yDif: 0},  //up
+		{xDif: 1, yDif: 0},   //down
+		{xDif: -1, yDif: -1}, //left up
+		{xDif: 1, yDif: 1},   //right down
+		{xDif: 1, yDif: -1},  //left down
+		{xDif: -1, yDif: 1}   //right up
+	];
+	for (var vectorIndex = 0; vectorIndex < vectors.length; vectorIndex++) {
+		var result = getSquareInDirection(coords, vectors[vectorIndex].xDif, vectors[vectorIndex].yDif, currentPlayer, arr, false);
+		if (result) {
+			//add coin to current position
+			markSquare(coords[0], coords[1]);
+			flipLine(arr);
 		}
 	}
-	return occupiedSquaresArr;
+	return arr;
 }
 
-//=================================================================//
-// Step 2: Use array of occupied tiles to get adjacent open tiles; //
-//=================================================================//
-function getOpenAdjacentSquares(arr) {
-	var openAdjacentSquares = [];
-	for(var i = 0; i < arr.length; i++) {
-		var adjacentSquares = getAdjacentSquares(arr[i]);
-		for(var j = 0; j < adjacentSquares.length; j++) {
-			if (adjacentSquares[j].color === "none") {
-				openAdjacentSquares.push(adjacentSquares[j]);
+//==========================================//
+// Pseudo-recursion to find coins in a line //
+//==========================================//
+
+
+function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray, isValid) {
+	var enemyColor = currentPlayer === "w" ? "b" : "w";
+	var next = [];
+	next[0] = coords[0] + xDif;
+	next[1] = coords[1] + yDif;
+	$(".tempHighlight").removeClass("tempHighlight");
+	// boardModel[next[0]][next[1]].domElement.addClass('tempHighlight');
+	if (boardModel[next[0]] !== undefined && boardModel[next[1]] !== undefined) {
+		if (boardModel[next[0]][next[1]].color === enemyColor) {
+			isValid = true;
+			if(boardModel[next[0]+xDif] !== undefined && boardModel[next[1]+yDif] !== undefined) {
+				if(boardModel[next[0]+xDif][next[1]+yDif].color === currentPlayer || boardModel[next[0]+xDif][next[1]+yDif].color === enemyColor){
+					targetArray.push(next);
+				}
 			}
+			return getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray, isValid);
+		}
+		else if (boardModel[next[0]][next[1]].color === 'none' ||
+			boardModel[next[0]][next[1]].color === undefined) {
+			targetArr = [];
+			return false;
+		} else if(boardModel[next[0]][next[1]].color === currentPlayer) {
+			return isValid;
 		}
 	}
-	uniqueArray(openAdjacentSquares);
-	return openAdjacentSquares;
 }
 
-//======================================//
-// Step 2A: Clears the adjacent-squares //
-// array of any repeats based on index  //
-//======================================//
-function uniqueArray(arr) {
-	for (var i = 0; i < arr.length; i++) {
-		for (var j = i+1; j < arr.length; j++) {
-			if (arr[i].coords[0] === arr[j].coords[0] &&
-				arr[i].coords[1] === arr[j].coords[1]){
-				arr.splice(j,1);
-			}
-		}
-	}
-}
+
+
+
+
+// //***********************************//
+// // **** Determining Legal Tiles **** //
+// //***********************************//
+//
+// function checkLegalSquares(x,y) {
+// 	test1 = getOccupiedSquares();
+// 	test2 = getOpenAdjacentSquares(test1);
+// 	test3 = getSquaresNextToEnemy(test2,currentPlayer);
+// 	console.log(test3);
+// 	test4 = getLegalSquares(test3);
+// }
+//
+// //=====================================//
+// // Step 1: Get array of occupied tiles //
+// //=====================================//
+// function getOccupiedSquares(){
+// 	var occupiedSquaresArr = [];
+// 	for(var i = 0; i < boardModel.length; i++) {
+// 		for (var j = 0; j < boardModel[i].length; j++) {
+// 			if (boardModel[i][j].color === "w" || boardModel[i][j].color === "b" ) {
+// 				occupiedSquaresArr.push(boardModel[i][j]);
+// 			}
+// 		}
+// 	}
+// 	return occupiedSquaresArr;
+// }
+//
+// //=================================================================//
+// // Step 2: Use array of occupied tiles to get adjacent open tiles; //
+// //=================================================================//
+// function getOpenAdjacentSquares(arr) {
+// 	var openAdjacentSquares = [];
+// 	for(var i = 0; i < arr.length; i++) {
+// 		var adjacentSquares = getAdjacentSquares(arr[i]);
+// 		for(var j = 0; j < adjacentSquares.length; j++) {
+// 			if (adjacentSquares[j].color === "none") {
+// 				openAdjacentSquares.push(adjacentSquares[j]);
+// 			}
+// 		}
+// 	}
+// 	uniqueArray(openAdjacentSquares);
+// 	return openAdjacentSquares;
+// }
+//
+// //======================================//
+// // Step 2A: Clears the adjacent-squares //
+// // array of any repeats based on index  //
+// //======================================//
+// function uniqueArray(arr) {
+// 	for (var i = 0; i < arr.length; i++) {
+// 		for (var j = i+1; j < arr.length; j++) {
+// 			if (arr[i].coords[0] === arr[j].coords[0] &&
+// 				arr[i].coords[1] === arr[j].coords[1]){
+// 				arr.splice(j,1);
+// 			}
+// 		}
+// 	}
+// }
 
 //====================================================//
 // Step 3: Find open squares next to enemy tiles only //
 //====================================================//
-function getSquaresNextToEnemy(arr,currentPlayer) {
-	var enemyColor = currentPlayer === "w" ? "b" : "w";
-	console.log("enemy color",enemyColor);
-	var nextToEnemySquares = [];
-	for (var i = 0; i < arr.length; i++) {
-		var adjacentSquares = getAdjacentSquares(arr[i]);
-		for (var j = 0; j < adjacentSquares.length; j++) {
-			if(adjacentSquares[j].color === enemyColor) {
-				nextToEnemySquares.push(arr[i]);
-			} else {
-				continue;
-			}
-		}
-	}
-	uniqueArray(nextToEnemySquares);
-	return nextToEnemySquares;
-}
-
-
-
-function getLegalSquares(arr) {
-	var legalSquares = [];
-	for (var i = 0; i < arr.length; i++) {
-		var adjacentSquares = getAdjacentSquares(arr[i]);
-		for (var j = 0; j < adjacentSquares.length; j++) {
-			var coordz = adjacentSquares[i].coords;
-			getSquareInDirection(coordz, i, j, currentPlayer, legalSquares)
-		}
-	}
-	return legalSquares;
-}
+// function getSquaresNextToEnemy(arr,currentPlayer) {
+// 	var enemyColor = currentPlayer === "w" ? "b" : "w";
+// 	console.log("enemy color",enemyColor);
+// 	var nextToEnemySquares = [];
+// 	for (var i = 0; i < arr.length; i++) {
+// 		var adjacentSquares = getAdjacentSquares(arr[i]);
+// 		for (var j = 0; j < adjacentSquares.length; j++) {
+// 			if(adjacentSquares[j].color === enemyColor) {
+// 				nextToEnemySquares.push(arr[i]);
+// 			} else {
+// 				continue;
+// 			}
+// 		}
+// 	}
+// 	uniqueArray(nextToEnemySquares);
+// 	return nextToEnemySquares;
+// }
+//
+//
+//
+// function getLegalSquares(arr) {
+// 	var legalSquares = [];
+// 	for (var i = 0; i < arr.length; i++) {
+// 		var adjacentSquares = getAdjacentSquares(arr[i]);
+// 		for (var j = 0; j < adjacentSquares.length; j++) {
+// 			var coordz = adjacentSquares[i].coords;
+// 			getSquareInDirection(coordz, i, j, currentPlayer, legalSquares)
+// 		}
+// 	}
+// 	return legalSquares;
+// }
 //
 // //====================================================//
 // // Step 3: Find open squares next to enemy tiles only //
@@ -278,69 +367,4 @@ function getLegalSquares(arr) {
 //==============================================//
 	// while also removing all other click event listeners
 
-//===================================//
-// Gets available squares for player //
-//===================================//
 
-function getAdjacentSquares(coin) {
-	var arr = [];
-	var coords = coin.coords;
-	var vectors = [
-		{xDif: -1, yDif: 0},  //check left
-		{xDif: 1, yDif: 0},    //right
-		{xDif: 0, yDif: -1},   //up
-		{xDif: 0, yDif: 1},    //down
-		{xDif: -1, yDif: 1},    //upleft
-		{xDif: 1, yDif: 1},   //down right
-		{xDif: -1, yDif: 1},   //down left
-		{xDif: 1, yDif: -1}   //up right
-	];
-	for (var vectorIndex = 0; vectorIndex < vectors.length; vectorIndex++) {
-		var result = getSquareInDirection(coords, vectors[vectorIndex].xDif, vectors[vectorIndex].yDif, currentPlayer, arr, false);
-		if(result){
-			//add coin to current position
-			markSquare(coords[0],coords[1]);
-			flipLine(arr);
-		}
-	}
-	// if (arr.length > 0) {
-	// 	for (var i = 0; i < arr.length; i++) {
-	// 		// arr[i] = [3x,5y]
-	// 		boardModel[arr[i][0]][arr[i][1]].color = currentPlayer;
-	// 	};
-	// }
-	return arr;
-}
-//==================================================//
-// Step 4: Determine actual legal moves down a line //
-//==================================================//
-
-
-function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray, isValid) {
-	var enemyColor = currentPlayer === "w" ? "b" : "w";
-	var next = [];
-	next[0] = coords[0] + xDif;
-	next[1] = coords[1] + yDif;
-	$(".tempHighlight").removeClass("tempHighlight");
-	boardModel[next[0]][next[1]].domElement.addClass('tempHighlight');
-	if (boardModel[coords[0]] !== undefined) {
-			if (boardModel[next[0]][next[1]].color === enemyColor) {
-				isValid = true;
-				targetArray.push(next);
-				return getSquareInDirection(next, xDif, yDif, currentPlayer, targetArray, isValid);
-			}
-			else if (boardModel[next[0]][next[1]].color === 'none' ||
-				boardModel[next[0]][next[1]].color === undefined) {
-				return false;
-			} else if(boardModel[next[0]][next[1]].color === currentPlayer) {
-				return isValid;
-		    }
-
-		}
-
-
-	}
-
-	function gameEnds() {
-
-	}

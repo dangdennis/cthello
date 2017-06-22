@@ -113,7 +113,7 @@ a {
 	margin-top: 175px;
 }
 
-.playeraOneIcon {
+.playerOneIcon {
 	float: left;
 	width: 15%;
 	margin-left: -120px;
@@ -168,7 +168,7 @@ p {
 	color: limegreen;
 }
 .tempHighlight{
-	border: 3px solid limegreen;
+	border: 3px solid purple;
 	box-sizing: border-box;
 }
 
