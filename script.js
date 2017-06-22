@@ -17,21 +17,6 @@ $(document).ready(function(){
 });
 
 
-//=================================//
-// Welcome Page Modal & Close Page //
-//=================================//
-
-// var modal = document.querySelector('#myModal');
-// var span = document.querySelector('.close')[0];
-//
-// function welcome_page() {
-// 	modal.style.display = "block";
-// }
-//
-// function close() {
-// 	modal.style.display = 'none';
-// }
-
 //**************************//
 // **** EVENT HANDLERS **** //
 //**************************//
@@ -366,5 +351,4 @@ function getSquareInDirection(coords, xDif, yDif, currentPlayer, targetArray, is
 // Step 5: Add Event Listeners to Legal Squares //
 //==============================================//
 	// while also removing all other click event listeners
-
 
