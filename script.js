@@ -53,7 +53,6 @@ function createBoard() {
 			var square = $("<div>").addClass("square").attr("row",i).attr("col",j);
 			square[0].coinObject = coin;
 			coin.domElement = square;
-			square.text("x:"+i+",y: "+j);
 			rowSquares.push(square);
 		};
 		rowView.append(rowSquares);
