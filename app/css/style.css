@@ -1,15 +1,15 @@
 @font-face {
 	font-family: lovecraft-cursive-hplhs;
-	src: url("lovecraft-cursive-hplhs-1361506076.ttf");
+	src: url("../fonts/lovecraft-cursive-hplhs-1361506076.ttf");
 }
 
 @font-face {
 	font-family: Ddigital-7s;
-	src: url("digital-7 (italic).ttf");
+	src: url("../fonts/digital-7 (italic).ttf");
 }
 
 body {
-	background: url("pictures/cthulu_background.jpg") no-repeat center;
+	background: url("../images/cthulu_background.jpg") no-repeat center;
 	background-size: cover;
 	text-align: center;
 	height: 108vh;
@@ -28,7 +28,7 @@ body {
 	height: 70%;
 	margin: 6% auto;
 	background-color: rgba(0, 0, 0, 0.8);
-	background-image: url("pictures/hp.png");
+	background-image: url("../images/hp.png");
 	background-repeat: no-repeat;
 	background-position: 50% 20%;
 	background-size: 66%;
@@ -173,11 +173,11 @@ p {
 }
 
 .blackPiece {
-	background: url("pictures/black_360.png") no-repeat center;
+	background: url("../images/black_360.png") no-repeat center;
 }
 
 .whitePiece {
-	background: url("pictures/white_360.png") no-repeat center;
+	background: url("../images/white_360.png") no-repeat center;
 }
 
 .validMoves {

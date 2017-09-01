@@ -1,0 +1,23 @@
+{
+  "name": "cthello",
+  "version": "1.0.0",
+  "description": "A re-imagination of the classic game of Othello.  Main logic uses a recursive vector walker to check for appropriate coins in all directions.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dangdennis/cthello.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dangdennis/cthello/issues"
+  },
+  "homepage": "https://github.com/dangdennis/cthello#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  }
+}
