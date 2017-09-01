@@ -75,7 +75,7 @@ header li {
 
 footer {
 	/*border: 1px solid yellow;*/
-	margin-top: -50px
+	margin-top: -50px;
 }
 
 footer li {
@@ -89,7 +89,7 @@ footer li {
 }
 
 a {
-	color: #FFC16E;
+	color: #ffc16e;
 }
 
 .lovecraft {
@@ -117,7 +117,6 @@ a {
 	float: left;
 	width: 15%;
 	margin-left: -120px;
-
 }
 
 .playerTwoIcon {
@@ -163,11 +162,11 @@ p {
 	width: 12.5%;
 	height: 100%;
 	/*background-color: rgba(0, 0, 0, 0.8);*/
-	border: 1px solid  #FFC16E;
+	border: 1px solid #ffc16e;
 	display: inline-block;
 	color: limegreen;
 }
-.tempHighlight{
+.tempHighlight {
 	border: 3px solid purple;
 	box-sizing: border-box;
 }
@@ -184,20 +183,6 @@ p {
 	background-color: red;
 	opacity: 0.5;
 }
-
-/* The Modal (background)
-.modal {
-    display: none; Hidden by default
-    position: fixed; Stay in place
-    z-index: 1; Sit on top
-    left: 0;
-    top: 0;
-    width: 100%; Full width
-    height: 100%; Full height
-    overflow: auto; Enable scroll if needed
-    background-color: rgb(0,0,0); Fallback color
-    background-color: rgba(0,0,0,0.4); Black w/ opacity
-} */
 
 /* Modal Content/Box */
 .modal-content {
