@@ -1,12 +1,16 @@
 body {
   background: url("../images/cthulu_background.jpg") no-repeat center;
   background-size: cover;
-  text-align: center;
-  height: 100%; }
+  text-align: center; }
+  body a {
+    color: whitesmoke; }
+  body li {
+    color: whitesmoke; }
 
 .container {
   height: 100vh;
   width: 100vw;
+  padding: 0;
   font-family: 'Bree Serif', serif; }
 
 .header-title {
@@ -14,16 +18,17 @@ body {
   font-family: lovecraft-cursive-hplhs, sans-serif;
   color: whitesmoke; }
 
-@font-face {
+.game-menu {
+  list-style: none;
   font-family: lovecraft-cursive-hplhs, sans-serif;
-  src: url("../fonts/lovecraft-cursive-hplhs-1361506076.ttf"); }
+  justify-content: space-around; }
+  .game-menu a,
+  .game-menu li {
+    list-style: none;
+    display: inline-block; }
 
-@font-face {
-  font-family: Ddigital-7s;
-  src: url("../fonts/digital-7 (italic).ttf"); }
-
-.container--main {
-  width: 100%; }
+.container-main {
+  margin-top: 2.5%; }
 
 .gameboard-container {
   height: 80vh;
@@ -36,32 +41,23 @@ body {
 .gameboard-row {
   height: 10%; }
 
-.header-menu {
-  list-style: none;
-  font-family: lovecraft-cursive-hplhs, sans-serif;
-  justify-content: space-around; }
-  .header-menu li {
-    list-style: none;
-    display: inline-block; }
-
-.reset {
-  color: white;
-  font-size: 2em; }
-
-.player--name {
-  color: whitesmoke;
-  font-size: 1em; }
-
-.player--icon {
-  width: 100%; }
-
 .square {
   box-sizing: border-box;
   width: 12.5%;
   height: 100%;
-  border: 1px solid #ffc16e;
-  display: inline-block;
-  color: limegreen; }
+  border: 1px solid whitesmoke;
+  display: inline-block; }
+
+.player-name {
+  color: whitesmoke;
+  font-size: 1.5em; }
+
+.player-score {
+  color: whitesmoke;
+  font-size: 1.5em; }
+
+.player-icon {
+  width: 100%; }
 
 .blackPiece {
   background: url("../images/black_360.png") no-repeat center; }
@@ -72,3 +68,15 @@ body {
 .validMoves {
   background-color: red;
   opacity: 0.5; }
+
+.reset {
+  color: white;
+  font-size: 1em; }
+
+@font-face {
+  font-family: lovecraft-cursive-hplhs, sans-serif;
+  src: url("../fonts/lovecraft-cursive-hplhs-1361506076.ttf"); }
+
+@font-face {
+  font-family: Ddigital-7s;
+  src: url("../fonts/digital-7 (italic).ttf"); }

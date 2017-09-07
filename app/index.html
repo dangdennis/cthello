@@ -11,42 +11,36 @@
 	<script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
-<div class="container mx-auto">
+<div class="container-fluid">
 	<header>
 		<h2 class="header-title mt-3">C'thello</h1>
-		<nav class="header-menu row mx-auto">
-			<ul class="">
-				<li>Start Game</li>
-				<li>
-					<a href="http://radagast.se/othello/Help/strategy.html" target="_blank">How to Play</a>
-				</li>
-			</ul>
-		</nav>
 	</header>
-
-	<main class="container--main row">
-			<div class='col-2'>
-				<img class="player--icon" src="images/hp1.png">
-				<div class="playerOneScore">
+	<main class="container-main row">
+			<div class='col-2 player'>
+				<img class="player-icon" src="images/hp1.png">
+				<div class="player-score">
 					<p>0</p>
 				</div>
-				<h2 class="player--name">Lovecraft</h2>
+				<h2 class="player-name">Lovecraft</h2>
 			</div>
 			<div class="gameboard-container col-8">
 				<div class="gameboard"></div>
 			</div>
-			<div class="col-2">
-				<img class="player--icon" src="images/ap.png">
-				<div class="playerTwoScore">
+			<div class="col-2 player">
+				<img class="player-icon" src="images/ap.png">
+				<div class="player-score">
 					<p>0</p>
 				</div>
-				<h2 class='player--name'>Poe</h2>
+				<h2 class='player-name'>Poe</h2>
 			</div>
 	</main>
-
 	<footer class="row">
+		<ul class="col-12 game-menu">
+			<li class="mr-3"><h3>Start Game</h3></li>
+			<a class="ml-3"><li><h3>How To Play</h3></li></a>
+		</ul>
 		<div class="col-12">
-			<h3 class="reset">Reset Game</h3>
+			<h3 class="reset mb-5">Reset Game</h3>
 		</div>
 	</footer>
 </body>

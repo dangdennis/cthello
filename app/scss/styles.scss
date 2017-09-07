@@ -4,12 +4,18 @@ body {
 	background: url("../images/cthulu_background.jpg") no-repeat center;
 	background-size: cover;
 	text-align: center;
-	height: 100%;
+	a {
+		color: whitesmoke;
+	}
+	li {
+		color: whitesmoke;
+	}
 }
 
 .container {
 	height: 100vh;
 	width: 100vw;
+	padding: 0;
 	font-family: 'Bree Serif', serif;
 }
 
@@ -19,18 +25,19 @@ body {
 	color: whitesmoke;
 }
 
-@font-face {
+.game-menu {
+	list-style: none;
 	font-family: $lovecraft-font;
-	src: url("../fonts/lovecraft-cursive-hplhs-1361506076.ttf");
+	justify-content: space-around;
+	a,
+	li {
+		list-style: none;
+		display: inline-block;
+	}
 }
 
-@font-face {
-	font-family: Ddigital-7s;
-	src: url("../fonts/digital-7 (italic).ttf");
-}
-
-.container--main {
-	width: 100%;
+.container-main {
+	margin-top: 2.5%;
 }
 
 .gameboard-container {
@@ -47,37 +54,26 @@ body {
 	height: 10%;
 }
 
-.header-menu {
-	list-style: none;
-	font-family: $lovecraft-font;
-	justify-content: space-around;
-	li {
-		list-style: none;
-		display: inline-block;
-	}
-}
-
-.reset {
-	color: white;
-	font-size: 2em;
-}
-
-.player--name {
-	color: whitesmoke;
-	font-size: 1em;
-}
-
-.player--icon {
-	width: 100%;
-}
-
 .square {
 	box-sizing: border-box;
 	width: 12.5%;
 	height: 100%;
-	border: 1px solid #ffc16e;
+	border: 1px solid whitesmoke;
 	display: inline-block;
-	color: limegreen;
+}
+
+.player-name {
+	color: whitesmoke;
+	font-size: 1.5em;
+}
+
+.player-score {
+	color: whitesmoke;
+	font-size: 1.5em;
+}
+
+.player-icon {
+	width: 100%;
 }
 
 .blackPiece {
@@ -91,4 +87,19 @@ body {
 .validMoves {
 	background-color: red;
 	opacity: 0.5;
+}
+
+.reset {
+	color: white;
+	font-size: 1em;
+}
+
+@font-face {
+	font-family: $lovecraft-font;
+	src: url("../fonts/lovecraft-cursive-hplhs-1361506076.ttf");
+}
+
+@font-face {
+	font-family: Ddigital-7s;
+	src: url("../fonts/digital-7 (italic).ttf");
 }
