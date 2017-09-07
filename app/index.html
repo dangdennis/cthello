@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Othello</title>
+	<title>C'thello</title>
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<script
 	  src="https://code.jquery.com/jquery-3.2.1.min.js"
 	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -11,37 +11,43 @@
 	<script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container mx-auto">
 	<header>
-		<h1>C'thello Game</h1>
-		<nav>
-			<ul>
+		<h2 class="header-title mt-3">C'thello</h1>
+		<nav class="header-menu row mx-auto">
+			<ul class="">
 				<li>Start Game</li>
-				<li><a href="http://radagast.se/othello/Help/strategy.html">How to Play</a></li>
+				<li>
+					<a href="http://radagast.se/othello/Help/strategy.html" target="_blank">How to Play</a>
+				</li>
 			</ul>
 		</nav>
-		<div>
-			<img class="playerOneIcon" src="images/hp1.png">
-			<div class="playerOneScore">
-				<p>2</p>
-			</div>
-		</div>
-		<h2 class="lovecraft">Lovecraft</h2>
-		<div>
-			<img class="playerTwoIcon" src="images/ap.png">
-			<div class="playerTwoScore">
-				<p>2</p>
-			</div>
-		</div>
-		<h2 class='poe'>Poe</h2>
 	</header>
-	<div class="main">
-		<div class="gameboard"></div>
-	</div>
-	<footer>
-		<ul>
-			<li>Reset Game</li>
-		</ul>
+
+	<main class="container--main row">
+			<div class='col-2'>
+				<img class="player--icon" src="images/hp1.png">
+				<div class="playerOneScore">
+					<p>0</p>
+				</div>
+				<h2 class="player--name">Lovecraft</h2>
+			</div>
+			<div class="gameboard-container col-8">
+				<div class="gameboard"></div>
+			</div>
+			<div class="col-2">
+				<img class="player--icon" src="images/ap.png">
+				<div class="playerTwoScore">
+					<p>0</p>
+				</div>
+				<h2 class='player--name'>Poe</h2>
+			</div>
+	</main>
+
+	<footer class="row">
+		<div class="col-12">
+			<h3 class="reset">Reset Game</h3>
+		</div>
 	</footer>
 </body>
 </html>
