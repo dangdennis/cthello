@@ -22,14 +22,10 @@ function Game() {
 		$(".square").on("click", function() {
 			self.placeCoin(this, currentPlayer);
 			self.displayBoard();
-			// self.getScores();
-			self.togglePlayer();
 		});
 	};
 
 	self.createBoard = function() {
-		// Two things happening: model and view of board
-		// are both created at the same time. Sorry
 		var boardModel = [];
 		for (var i = 0; i < gameSize; i++) {
 			// Model + view ROWS
@@ -57,6 +53,14 @@ function Game() {
 		boardModel[4][3].color = "b";
 		boardModel[4][4].color = "w";
 		return boardModel;
+	};
+
+	self.makeCheckered = function() {
+		boardModel = boardModel.map(row => {
+			return row.map(square => {
+				$(square).addClass("square--color-one");
+			});
+		});
 	};
 
 	self.displayBoard = function() {
@@ -119,9 +123,9 @@ function Game() {
 				false
 			);
 			if (result) {
-				//add coin to current position
 				self.markSquare(coords[0], coords[1]);
 				self.flipLine(arr);
+				self.togglePlayer();
 			}
 		}
 		return arr;
@@ -194,7 +198,18 @@ function Game() {
 	};
 
 	self.togglePlayer = function() {
-		return (currentPlayer = currentPlayer === "w" ? "b" : "w");
+		currentPlayer = currentPlayer === "w" ? "b" : "w";
+		self.highlightPlayer();
+	};
+
+	self.highlightPlayer = function() {
+		if (currentPlayer === "w") {
+			$(".p1").toggleClass("player--selected");
+			$(".p2").toggleClass("player--selected");
+		} else {
+			$(".p1").toggleClass("player--selected");
+			$(".p2").toggleClass("player--selected");
+		}
 	};
 
 	self.init();

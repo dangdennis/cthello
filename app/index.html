@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>C'thello</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
@@ -14,11 +15,11 @@
 <body>
 <div class="container-fluid">
 	<header>
-		<h2 class="header-title mt-3">C'thello</h1>
+		<h2 class="header-title mt-3">C'thello</h2>
 	</header>
-	<main class="container-main row">
+	<main class="container-main row mb-5">
 			<div class='col-2 player-container'>
-				<div class="player card player--selected">
+				<div class="player card p1 player--selected">
 					<img class="player-icon" src="images/hp1.png">
 					<div class="player-score">
 						<p class="player-score--one">0</p>
@@ -30,7 +31,7 @@
 				<div class="gameboard"></div>
 			</div>
 			<div class="col-2 player-container">
-				<div class="player card">
+				<div class="player card p2">
 					<img class="player-icon" src="images/ap.png">
 					<div class="player-score">
 						<p class="player-score--two">0</p>
@@ -48,5 +49,6 @@
 			<h3 class="reset mb-5">Reset Game</h3>
 		</div>
 	</footer>
+</div>
 </body>
 </html>
