@@ -1,8 +1,8 @@
 $lovecraft-font: lovecraft-cursive-hplhs, sans-serif;
 
 body {
+	height: 100vh;
 	background: url("../images/cthulu_background.jpg") no-repeat center;
-	background-size: cover;
 	text-align: center;
 	a {
 		color: whitesmoke;
@@ -10,13 +10,6 @@ body {
 	li {
 		color: whitesmoke;
 	}
-}
-
-.container {
-	height: 100vh;
-	width: 100vw;
-	padding: 0;
-	font-family: 'Bree Serif', serif;
 }
 
 .header-title {
@@ -41,7 +34,7 @@ body {
 }
 
 .gameboard-container {
-	height: 80vh;
+	height: 70vh;
 	width: 80vw;
 }
 
@@ -51,7 +44,7 @@ body {
 }
 
 .gameboard-row {
-	height: 10%;
+	height: 12.5%;
 }
 
 .square {
@@ -62,23 +55,31 @@ body {
 	display: inline-block;
 }
 
+.square--color-one {
+	background-color: rgba(0, 0, 0, .5);
+}
+
+.square--color-two {
+	background-color: rgba(255, 255, 255, .5);
+}
+
 .player-container {
 	height: 40vh;
 	.player {
-		padding: 5px;
-		background-color: rgba(62, 46, 15, .7);
+		margin: 10px;
+		background-color: rgba(0, 0, 0, .85);
 	}
 }
 
 .player--selected {
-	-webkit-box-shadow: 0 0 20px rgb(255, 217, 155);
-	-moz-box-shadow: 0 0 20px rgb(255, 217, 155);
-	box-shadow: 0 0 20px rgb(255, 217, 155);
+	-webkit-box-shadow: 0 0 20px rgb(51, 8, 226);
+	-moz-box-shadow: 0 0 20px rgb(51, 8, 226);
+	box-shadow: 0 0 50px rgb(51, 8, 226);
 }
 
 .player-name {
 	color: whitesmoke;
-	font-size: 1.5em;
+	font-size: 1.0em;
 }
 
 .player-score {
