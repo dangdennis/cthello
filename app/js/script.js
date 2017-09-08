@@ -22,7 +22,7 @@ function Game() {
 		$(".square").on("click", function() {
 			self.placeCoin(this, currentPlayer);
 			self.displayBoard();
-			// getScores();
+			// self.getScores();
 			self.togglePlayer();
 		});
 	};
@@ -34,8 +34,8 @@ function Game() {
 		for (var i = 0; i < gameSize; i++) {
 			// Model + view ROWS
 			var rowModel = [];
-			var rowView = $("<div>").addClass("gameboard-row").attr("row", i);
 			var rowSquares = [];
+			var rowView = $("<div>").addClass("gameboard-row").attr("row", i);
 			for (var j = 0; j < gameSize; j++) {
 				// Model + view SQUARES/COINS
 				var coin = new Coin(i, j);
@@ -66,10 +66,10 @@ function Game() {
 				$(CurrentCoin).removeClass("whitePiece blackPiece");
 				if (boardModel[i][j].color === "w") {
 					// "w" = white pieces
-					$(CurrentCoin).addClass("whitePiece");
+					$(CurrentCoin).addClass("whitePiece animated flipInX");
 				} else if (boardModel[i][j].color === "b") {
 					// "b" = black pieces
-					$(CurrentCoin).addClass("blackPiece");
+					$(CurrentCoin).addClass("blackPiece animated flipInX");
 				} else if (boardModel[i][j].color === "v") {
 					// "v" = valid moves
 					$(CurrentCoin).addClass("validMove");
@@ -86,11 +86,11 @@ function Game() {
 				if (boardModel[i][j] === "w") {
 					countWhite++;
 					remainingSpaces--;
-					$(".playerOneScore").text(countWhite);
+					$(".player-score--one").text(countWhite);
 				} else if (boardModel[i][j] === "b") {
 					countBlack++;
 					remainingSpaces--;
-					$(".playerTwoScore").text(countBlack);
+					$(".player-score--two").text(countBlack);
 				}
 			}
 		}
@@ -139,8 +139,6 @@ function Game() {
 		var next = [];
 		next[0] = coords[0] + xDif;
 		next[1] = coords[1] + yDif;
-		$(".tempHighlight").removeClass("tempHighlight");
-		// boardModel[next[0]][next[1]].domElement.addClass('tempHighlight');
 		if (
 			boardModel[next[0]] !== undefined &&
 			boardModel[next[1]] !== undefined
@@ -168,7 +166,7 @@ function Game() {
 					isValid
 				);
 			} else if (
-				boardModel[next[0]][next[1]].color === "none" ||
+				boardModel[next[0]][next[1]].color === "" ||
 				boardModel[next[0]][next[1]].color === undefined
 			) {
 				targetArr = [];
@@ -204,5 +202,5 @@ function Game() {
 
 function Coin(x, y) {
 	this.coords = [x, y];
-	this.color = "none";
+	this.color = "";
 }

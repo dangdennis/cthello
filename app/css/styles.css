@@ -48,6 +48,17 @@ body {
   border: 1px solid whitesmoke;
   display: inline-block; }
 
+.player-container {
+  height: 40vh; }
+  .player-container .player {
+    padding: 5px;
+    background-color: rgba(62, 46, 15, 0.7); }
+
+.player--selected {
+  -webkit-box-shadow: 0 0 20px #ffd99b;
+  -moz-box-shadow: 0 0 20px #ffd99b;
+  box-shadow: 0 0 20px #ffd99b; }
+
 .player-name {
   color: whitesmoke;
   font-size: 1.5em; }
